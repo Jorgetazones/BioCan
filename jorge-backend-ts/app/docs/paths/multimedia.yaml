@@ -1,0 +1,55 @@
+multimedia:
+  create:
+    post:
+      tags:
+        - Multimedia
+      summary: Subir archivo multimedia
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '201':
+          description: Multimedia creada
+
+  productId:
+    get:
+      tags:
+        - Multimedia
+      summary: Obtener multimedia por ID de producto
+      parameters:
+        - in: path
+          name: productId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Multimedia del producto
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '../components/schemas.yaml#/components/schemas/Multimedia'
+
+  id:
+    delete:
+      tags:
+        - Multimedia
+      summary: Eliminar multimedia por ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Multimedia eliminada

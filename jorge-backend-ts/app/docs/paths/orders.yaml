@@ -1,0 +1,35 @@
+orders:
+  post:
+    tags:
+      - Orders
+    summary: Crear un nuevo pedido
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas.yaml#/components/schemas/OrderInput'
+    responses:
+      '201':
+        description: Pedido creado exitosamente
+
+id:
+  put:
+    tags:
+      - Orders
+    summary: Actualizar un pedido por ID
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas.yaml#/components/schemas/OrderUpdate'
+    responses:
+      '200':
+        description: Pedido actualizado

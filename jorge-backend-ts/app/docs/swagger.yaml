@@ -1,0 +1,67 @@
+openapi: 3.0.3
+info:
+  title: BioCan API
+  description: API RESTful para gestionar usuarios, productos, pedidos y multimedia en la plataforma BioCan.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3000/api
+    description: Servidor local de desarrollo
+
+paths:
+  # Ruta para autenticación
+  /auth/login:
+    $ref: './paths/auth.yaml#/login/post'
+  /auth/logout:
+    $ref: './paths/auth.yaml#/logout/post'
+  /auth/check-auth:
+    $ref: './paths/auth.yaml#/check-auth/get'
+
+  # Rutas de usuarios
+  /users:
+    $ref: './paths/users.yaml#/users/get'
+  /users/{id}:
+    $ref: './paths/users.yaml#/users/id/get'
+
+  # Rutas de productos
+  /products:
+    $ref: './paths/products.yaml#/products/get'
+  /products/{id}:
+    $ref: './paths/products.yaml#/products/id/get'
+  /products/user/{userId}:
+    $ref: './paths/products.yaml#/products/user/{userId}/get'
+
+  # Rutas de pedidos
+  /orders:
+    $ref: './paths/orders.yaml#/orders/post'
+  /orders/{id}:
+    $ref: './paths/orders.yaml#/orders/id/put'
+  /orders/user/{userId}:
+    $ref: './paths/orders.yaml#/orders/user/{userId}/get'
+
+  # Rutas de detalles de pedidos
+  /order-details:
+    $ref: './paths/orderDetails.yaml#/order-details/post'
+  /order-details/{id}:
+    $ref: './paths/orderDetails.yaml#/order-details/id/get'
+
+  # Rutas de multimedia
+  /multimedia/create:
+    $ref: './paths/multimedia.yaml#/multimedia/create/post'
+  /multimedia/{productId}:
+    $ref: './paths/multimedia.yaml#/multimedia/productId/get'
+  /multimedia/{id}:
+    $ref: './paths/multimedia.yaml#/multimedia/id/delete'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    $ref: './components/schemas.yaml'
+
+security:
+  - bearerAuth: []

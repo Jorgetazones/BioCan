@@ -1,0 +1,143 @@
+components:
+  schemas:
+    LoginInput:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    AuthResponse:
+      type: object
+      properties:
+        token:
+          type: string
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+
+User:
+  type: object
+  properties:
+    id:
+      type: integer
+    username:
+      type: string
+    tipo:
+      type: string
+  required: [id, username, tipo]
+
+UserInput:
+  type: object
+  properties:
+    username:
+      type: string
+    password:
+      type: string
+    tipo:
+      type: string
+  required: [username, password, tipo]
+Product:
+  type: object
+  properties:
+    id:
+      type: integer
+    nombre:
+      type: string
+    descripcion:
+      type: string
+    precio:
+      type: number
+    stock:
+      type: integer
+    userId:
+      type: integer
+    imagen:
+      type: string
+  required: [id, nombre, descripcion, precio, stock, userId, imagen]
+
+ProductInput:
+  type: object
+  properties:
+    nombre:
+      type: string
+    descripcion:
+      type: string
+    precio:
+      type: number
+    stock:
+      type: integer
+  required: [nombre, descripcion, precio, stock]
+Order:
+  type: object
+  properties:
+    id:
+      type: integer
+    userId:
+      type: integer
+    estado:
+      type: string
+    productos:
+      type: array
+      items:
+        type: object
+        properties:
+          productId:
+            type: integer
+          cantidad:
+            type: integer
+  required: [id, userId, estado, productos]
+
+OrderInput:
+  type: object
+  properties:
+    userId:
+      type: integer
+    productos:
+      type: array
+      items:
+        type: object
+        properties:
+          productId:
+            type: integer
+          cantidad:
+            type: integer
+  required: [userId, productos]
+
+OrderUpdate:
+  type: object
+  properties:
+    estado:
+      type: string
+  required: [estado]
+OrderDetail:
+  type: object
+  properties:
+    id:
+      type: integer
+    orderId:
+      type: integer
+    productId:
+      type: integer
+    cantidad:
+      type: integer
+    precio:
+      type: number
+  required: [id, orderId, productId, cantidad, precio]
+
+OrderDetailInput:
+  type: object
+  properties:
+    orderId:
+      type: integer
+    productId:
+      type: integer
+    cantidad:
+      type: integer
+    precio:
+      type: number
+  required: [orderId, productId, cantidad, precio]

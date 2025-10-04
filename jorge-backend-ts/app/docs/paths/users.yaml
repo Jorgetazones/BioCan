@@ -1,0 +1,47 @@
+users:
+  get:
+    tags:
+      - Users
+    summary: Obtener todos los usuarios
+    responses:
+      '200':
+        description: Lista de usuarios
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '../components/schemas.yaml#/components/schemas/User'
+
+  post:
+    tags:
+      - Users
+    summary: Crear un nuevo usuario
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas.yaml#/components/schemas/UserInput'
+    responses:
+      '201':
+        description: Usuario creado exitosamente
+
+id:
+  get:
+    tags:
+      - Users
+    summary: Obtener usuario por ID
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    responses:
+      '200':
+        description: Usuario encontrado
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas.yaml#/components/schemas/User'

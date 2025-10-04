@@ -1,0 +1,46 @@
+/order-details:
+  post:
+    tags:
+      - OrderDetails
+    summary: Crear un nuevo detalle de pedido
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas.yaml#/components/schemas/OrderDetailInput'
+    responses:
+      '201':
+        description: Detalle de pedido creado
+
+/order-details/{id}:
+  get:
+    tags:
+      - OrderDetails
+    summary: Obtener detalle de pedido por ID
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    responses:
+      '200':
+        description: Detalle de pedido encontrado
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas.yaml#/components/schemas/OrderDetail'
+  delete:
+    tags:
+      - OrderDetails
+    summary: Eliminar detalle de pedido por ID
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    responses:
+      '200':
+        description: Detalle de pedido eliminado

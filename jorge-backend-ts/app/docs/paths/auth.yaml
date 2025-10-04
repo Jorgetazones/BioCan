@@ -1,0 +1,42 @@
+login:
+  post:
+    tags:
+      - Auth
+    summary: Iniciar sesión de usuario
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas.yaml#/components/schemas/LoginInput'
+    responses:
+      '200':
+        description: Autenticación exitosa
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas.yaml#/components/schemas/AuthResponse'
+
+logout:
+  post:
+    tags:
+      - Auth
+    summary: Cerrar sesión de usuario
+    responses:
+      '200':
+        description: Sesión cerrada correctamente
+
+check-auth:
+  get:
+    tags:
+      - Auth
+    summary: Verifica si el usuario está autenticado
+    security:
+      - bearerAuth: []
+    responses:
+      '200':
+        description: Usuario autenticado
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas.yaml#/components/schemas/User'

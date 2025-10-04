@@ -1,0 +1,33 @@
+products:
+  get:
+    tags:
+      - Products
+    summary: Obtener todos los productos
+    responses:
+      '200':
+        description: Lista de productos
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '../components/schemas.yaml#/components/schemas/Product'
+
+id:
+  get:
+    tags:
+      - Products
+    summary: Obtener producto por ID
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    responses:
+      '200':
+        description: Producto encontrado
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas.yaml#/components/schemas/Product'
