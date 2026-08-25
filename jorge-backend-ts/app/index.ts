@@ -5,7 +5,12 @@ import helmet from 'helmet';
 
 import corsOptions from './config/cors';
 import { connectToDatabase, syncDatabase } from './config/db';
-import { ensureUploadsDir, SWAGGER_FILE, UPLOADS_DIR } from './config/paths';
+import {
+  ensureUploadsDir,
+  seedUploadsDir,
+  SWAGGER_FILE,
+  UPLOADS_DIR,
+} from './config/paths';
 import morganMiddleware from './middleware/loggerMiddleware';
 import limiter from './middleware/rateLimitMiddleware';
 import registerLimiter from './middleware/registerRateLimit';
@@ -55,6 +60,14 @@ app.use(express.json());
 app.use(cors(corsOptions));
 
 ensureUploadsDir();
+
+// Repuebla el volumen con las imágenes semilla que falten: sin esto, montar un
+// volumen vacío haría que las fotos de los productos del dump dieran 404.
+const seeded = seedUploadsDir();
+if (seeded > 0) {
+  logger.info(`Copiadas ${seeded} imágenes semilla a ${UPLOADS_DIR}`);
+}
+
 app.use('/uploads', cors(corsOptions), express.static(UPLOADS_DIR));
 
 // Antes del rate limit: el healthcheck del PaaS consume cuota si no.
