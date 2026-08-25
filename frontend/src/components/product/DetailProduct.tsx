@@ -4,6 +4,7 @@ import { Box, Divider, IconButton, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchData } from '../../helper/commonHelper';
+import { imageUrl } from '../../helper/varsHelper';
 import { addToCart } from '../../store/cartSlice';
 import { RootState } from '../../store/store';
 import { IProduct } from '../../types/IProducts';
@@ -79,9 +80,7 @@ const ProductDetail = ({ id }: Props) => {
   };
 
   const getImageUrl = (): string => {
-    return product?.multimedia?.[0]?.url
-      ? `http://localhost:3000/uploads/${product.multimedia[0].url}`
-      : '/src/data/img/BioCan_Logo.png';
+    return imageUrl(product?.multimedia?.[0]?.url) ?? '/img/BioCan_Logo.png';
   };
 
   if (loading) {

@@ -4,11 +4,15 @@ import ProductDetail from '../../components/product/DetailProduct';
 
 const ProductPage = () => {
   const { id } = useParams();
-  console.log('Producto ID:', id); // Verifica el id
 
-  if (!id) return <Typography>Producto no encontrado</Typography>;
+  // useParams siempre devuelve string: ProductDetail espera un number.
+  const productId = Number(id);
 
-  return <ProductDetail id={id} />;
+  if (!id || Number.isNaN(productId)) {
+    return <Typography>Producto no encontrado</Typography>;
+  }
+
+  return <ProductDetail id={productId} />;
 };
 
 export default ProductPage;

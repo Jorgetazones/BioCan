@@ -24,3 +24,5 @@ dist-ssr
 *.sw?
 .env
 .env.*
+# La plantilla sí se versiona: documenta qué variables hay que configurar.
+!.env.example

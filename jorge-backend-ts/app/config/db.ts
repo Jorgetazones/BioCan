@@ -10,15 +10,24 @@ import User from '../model/User';
 const { DB_USERNAME, DB_PORT, DB_DATABASE, DB_PASSWORD, DB_HOST } =
   getEnvVariables();
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 const db = new Sequelize({
   dialect: 'mysql',
   host: DB_HOST,
-  port: parseInt(DB_PORT),
+  port: parseInt(DB_PORT, 10),
   database: DB_DATABASE,
   username: DB_USERNAME,
   password: DB_PASSWORD,
   models: [User, Product, OrderDetails, Orders, Multimedia, Ratings],
-  logging: true, // Cambia a false en producción para evitar logs excesivos
+  // En producción cada query en el log llena el cuadro de mandos de ruido.
+  logging: process.env.DB_LOGGING === 'true' ? console.log : false,
+  // MySQL gestionada expuesta por internet suele exigir TLS.
+  dialectOptions:
+    process.env.DB_SSL === 'true'
+      ? { ssl: { rejectUnauthorized: false } }
+      : {},
+  pool: { max: isProduction ? 10 : 5, min: 0, idle: 10000, acquire: 30000 },
 });
 
 export async function connectToDatabase(): Promise<void> {

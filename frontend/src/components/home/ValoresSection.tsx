@@ -5,14 +5,14 @@ const ValoresSection = () => {
     {
       title: 'Ecológico',
       image:
-        '/src/data/img/sprout_leaf_plant_agriculture_ground_icon_183627.svg',
+        '/img/sprout_leaf_plant_agriculture_ground_icon_183627.svg',
     },
     {
       title: 'Apoya lo local',
       image:
-        '/src/data/img/agriculture_garden_farming_gardener_avatar_farm_man_nature_farmer_icon_262346.svg',
+        '/img/agriculture_garden_farming_gardener_avatar_farm_man_nature_farmer_icon_262346.svg',
     },
-    { title: 'Frescura garantizada', image: '/src/data/img/verduras.png' },
+    { title: 'Frescura garantizada', image: '/img/verduras.png' },
   ];
 
   return (

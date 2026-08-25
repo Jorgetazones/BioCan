@@ -17,7 +17,7 @@ export const getAllProducts = async (): Promise<IProduct[]> => {
 };
 
 export const getProductById = async (id: string | number) => {
-  const res = await fetch(`http://localhost:3000/api/products/${id}`);
+  const res = await fetchData({ url: `/products/${id}`, method: 'GET' });
   if (!res.ok) throw new Error('Producto no encontrado');
   const data = await res.json();
   return data;

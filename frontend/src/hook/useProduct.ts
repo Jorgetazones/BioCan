@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { fetchData } from '../helper/commonHelper';
 import { IProduct } from '../types/IProducts';
 
 export const useProduct = (id: number) => {
@@ -10,7 +11,12 @@ export const useProduct = (id: number) => {
     const loadData = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`http://localhost:3000/api/product${id}`);
+        // Antes apuntaba a `api/product${id}` (sin la "s" ni la barra), así que
+        // siempre devolvía 404.
+        const response = await fetchData({
+          url: `/products/${id}`,
+          method: 'GET',
+        });
         if (!response.ok) throw new Error('Error al obtener los datos');
 
         const data = await response.json();
