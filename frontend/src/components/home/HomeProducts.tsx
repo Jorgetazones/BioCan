@@ -2,6 +2,7 @@ import { Alert, Box, Link, Typography } from '@mui/material';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { useNavigate } from 'react-router-dom';
+import { imageUrl } from '../../helper/varsHelper';
 import { useProducts } from '../../hook/useProducts';
 import { IProduct } from '../../types/IProducts';
 
@@ -10,9 +11,7 @@ const HomeProducts = () => {
   const { products, error } = useProducts();
 
   const getImageUrl = (product: IProduct): string => {
-    return product.multimedia?.[0]?.url
-      ? `http://localhost:3000/uploads/${product.multimedia[0].url}`
-      : '/src/data/img/BioCan_Logo.png';
+    return imageUrl(product.multimedia?.[0]?.url) ?? '/img/BioCan_Logo.png';
   };
 
   if (error) {

@@ -27,7 +27,7 @@ export const Header = () => {
       <RouterLink to='/' style={{ display: 'flex', alignItems: 'center' }}>
         <Box
           component='img'
-          src='/src/data/img/BioCan_Logo.png'
+          src='/img/BioCan_Logo.png'
           alt='Biocan Logo'
           sx={{ height: 60, width: 'auto' }}
         />

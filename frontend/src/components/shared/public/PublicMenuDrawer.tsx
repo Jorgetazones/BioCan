@@ -68,7 +68,7 @@ const PublicMenuDrawer = () => {
         <Box sx={{ display: 'flex', alignItems: 'center', p: 2 }}>
           <Box
             component='img'
-            src='/src/data/img/BioCan_Logo.png'
+            src='/img/BioCan_Logo.png'
             alt='Biocan Logo'
             sx={{ height: 40, width: 'auto', mr: 1 }}
           />

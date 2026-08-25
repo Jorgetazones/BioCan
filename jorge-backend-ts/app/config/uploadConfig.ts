@@ -1,9 +1,13 @@
 import { Request } from 'express';
 import multer from 'multer';
 import path from 'path';
+import { ensureUploadsDir, UPLOADS_DIR } from './paths';
 
-// Ruta de la carpeta uploads
-const uploadDir = path.join(__dirname, '..', 'uploads');
+// Ruta de la carpeta uploads (configurable con UPLOADS_DIR para usar un volumen).
+const uploadDir = UPLOADS_DIR;
+
+// Un volumen recién montado viene vacío: sin esto multer falla al primer upload.
+ensureUploadsDir();
 
 // Configuración del almacenamiento
 const storage = multer.diskStorage({

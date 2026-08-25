@@ -12,7 +12,10 @@ import {
 import Orders from './Orders';
 import Product from './Product';
 
-@Table({ tableName: 'OrderDetails', timestamps: true })
+// En minúscula, igual que el dump y los otros cinco modelos: MySQL en Linux
+// distingue mayúsculas en los nombres de tabla, y 'OrderDetails' haría que
+// sync() creara una tabla vacía aparte de la 'orderdetails' que trae los datos.
+@Table({ tableName: 'orderdetails', timestamps: true })
 class OrderDetails extends Model {
   @PrimaryKey
   @AutoIncrement

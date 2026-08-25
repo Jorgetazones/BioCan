@@ -1,8 +1,15 @@
-import bcrypt from 'bcrypt';
+import bcryptjs from 'bcryptjs';
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
+import {
+  AUTH_COOKIE_MAX_AGE,
+  AUTH_COOKIE_NAME,
+  authCookieOptions,
+} from '../config/cookies';
+import { getJwtSecret } from '../helper/varsHelper';
 import User from '../model/User';
 import logger from '../utils/logger';
+import { JWT_EXPIRES_IN } from '../utils/jwt';
 
 export const loginUser = async (
   req: Request,
@@ -23,7 +30,9 @@ export const loginUser = async (
       return;
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    // bcryptjs, no bcrypt: User.ts hashea con bcryptjs (mismo formato de hash) y
+    // bcrypt es un módulo nativo que obliga a compilar en el deploy sin aportar nada.
+    const isPasswordValid = await bcryptjs.compare(password, user.password);
     if (!isPasswordValid) {
       const error = new Error('Contraseña incorrecta');
       logger.warn(
@@ -39,16 +48,13 @@ export const loginUser = async (
         username: user.nombre,
         tipo: user.tipo,
       },
-      process.env.JWT_SECRET as string,
-      { expiresIn: '1d' }
+      getJwtSecret(),
+      { expiresIn: JWT_EXPIRES_IN }
     );
 
-    res.cookie('token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax',
-      maxAge: 24 * 60 * 60 * 1000, // 1 día
-      path: '/',
+    res.cookie(AUTH_COOKIE_NAME, token, {
+      ...authCookieOptions,
+      maxAge: AUTH_COOKIE_MAX_AGE,
     });
 
     logger.info(`Usuario ${username} inició sesión correctamente`);
@@ -72,12 +78,7 @@ export const loginUser = async (
 
 export const logoutUser = (req: Request, res: Response): void => {
   try {
-    res.clearCookie('token', {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax',
-      path: '/',
-    });
+    res.clearCookie(AUTH_COOKIE_NAME, authCookieOptions);
     logger.info('Cookie eliminada y sesión cerrada correctamente');
     res.status(200).json({ message: 'Sesión cerrada correctamente' });
   } catch (error) {

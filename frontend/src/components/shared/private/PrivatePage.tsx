@@ -14,6 +14,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { fetchData, updateUserData } from '../../../helper/commonHelper';
+import { imageUrl } from '../../../helper/varsHelper';
 import { setCategory, setSearchText } from '../../../store/filterSlice';
 import { RootState } from '../../../store/store';
 import { DeleteButton } from '../../buttons/DeleteButton';
@@ -289,9 +290,8 @@ const PrivatePage = () => {
 
       {filteredProducts.length ? (
         filteredProducts.map((product) => {
-          const imageUrl = product.multimedia?.[0]?.url
-            ? `http://localhost:3000/uploads/${product.multimedia[0].url}`
-            : '/src/data/img/BioCan_Logo.png';
+          const productImage =
+            imageUrl(product.multimedia?.[0]?.url) ?? '/img/BioCan_Logo.png';
 
           return (
             <Card key={product.id} variant='outlined' sx={{ mb: 2 }}>
@@ -301,7 +301,7 @@ const PrivatePage = () => {
                     component='img'
                     height='200'
                     width='150'
-                    image={imageUrl}
+                    image={productImage}
                     crossOrigin='anonymous'
                     alt={product.nombre}
                     sx={{ objectFit: 'cover' }}

@@ -10,12 +10,14 @@ const CartNotification = () => {
   useEffect(() => {
     const prevCart = prevCartRef.current;
 
+    // quantity es opcional en el tipo del carrito: sin el ?? 0 el total sale NaN
+    // y la comparación de abajo nunca dispara el aviso.
     const prevTotalItems = prevCart.reduce(
-      (sum, item) => sum + item.quantity,
+      (sum, item) => sum + (item.quantity ?? 0),
       0
     );
     const currentTotalItems = cart.reduce(
-      (sum, item) => sum + item.quantity,
+      (sum, item) => sum + (item.quantity ?? 0),
       0
     );
 

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { fetchData } from '../helper/commonHelper';
 import { IProduct } from '../types/IProducts';
 
 export const useProducts = () => {
@@ -12,7 +13,7 @@ export const useProducts = () => {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:3000/api/products');
+      const response = await fetchData({ url: '/products', method: 'GET' });
       if (!response.ok) throw new Error('Error: No se pudo obtener los datos');
 
       const data = await response.json();

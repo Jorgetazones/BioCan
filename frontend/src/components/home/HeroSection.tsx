@@ -15,7 +15,7 @@ const HeroSection = () => {
         justifyContent: 'center',
         textAlign: 'center',
         color: 'white',
-        backgroundImage: `url("/src/data/img/fondo_campo.jpg")`,
+        backgroundImage: `url("/img/fondo_campo.jpg")`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         px: 2,

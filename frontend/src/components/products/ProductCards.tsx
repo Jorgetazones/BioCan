@@ -13,6 +13,7 @@ import {
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { imageUrl } from '../../helper/varsHelper';
 import { addToCart } from '../../store/cartSlice';
 import { fetchProductQuantities } from '../../store/productsSlice';
 import {
@@ -77,9 +78,8 @@ const ProductCards: React.FC<ProductCardsProps> = ({ products }) => {
         {filteredProducts.map((product) => {
           const productQuantity = quantities[product.id] || 0;
 
-          const imageUrl = product.multimedia?.[0]?.url
-            ? `http://localhost:3000/uploads/${product.multimedia[0].url}`
-            : '/src/data/img/BioCan_Logo.png';
+          const productImage =
+            imageUrl(product.multimedia?.[0]?.url) ?? '/img/BioCan_Logo.png';
 
           return (
             <Card
@@ -98,7 +98,7 @@ const ProductCards: React.FC<ProductCardsProps> = ({ products }) => {
                 <CardMedia
                   component='img'
                   height='200'
-                  image={imageUrl}
+                  image={productImage}
                   crossOrigin='anonymous'
                   alt={product.nombre}
                   sx={{ objectFit: 'cover' }}

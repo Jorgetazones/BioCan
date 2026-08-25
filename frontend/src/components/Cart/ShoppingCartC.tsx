@@ -13,6 +13,7 @@ import {
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchData } from '../../helper/commonHelper';
+import { imageUrl } from '../../helper/varsHelper';
 import { useAppSelector } from '../../hook/useAppDispatch';
 import {
   clearCart,
@@ -48,9 +49,7 @@ const ShoppingCart: React.FC = () => {
   };
 
   const getImageUrl = (item: any): string => {
-    return item.multimedia?.[0]?.url
-      ? `http://localhost:3000/uploads/${item.multimedia[0].url}`
-      : '/src/data/img/BioCan_Logo.png';
+    return imageUrl(item.multimedia?.[0]?.url) ?? '/img/BioCan_Logo.png';
   };
 
   // Función para finalizar el pedido
