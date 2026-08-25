@@ -35,18 +35,24 @@ Eso reescribe los hashes de los commits: hazlo antes de que nadie más clone.
    `MYSQLHOST`, `MYSQLPORT`, `MYSQLDATABASE`, `MYSQLUSER`, `MYSQLPASSWORD`.
    La base de datos por defecto se llama `railway`.
 3. Importa el dump desde tu máquina usando la **URL pública** (`Connect →
-   Public Network`, del tipo `xxx.proxy.rlwy.net` con su puerto):
+   Public Network`, del tipo `xxx.proxy.rlwy.net` con su puerto).
+
+   En **PowerShell** hay dos trampas: `mysql.exe` no está en el PATH, y
+   PowerShell no admite `<` para redirigir entrada. Por eso se envuelve en
+   `cmd /c`, que además pasa el fichero byte a byte y no rompe los acentos:
 
    ```bash
-   mysql -h <host-publico> -P <puerto> -u root -p<password> railway < Dump20250516.sql
+   cmd /c '"C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe" --default-character-set=utf8mb4 -h HOST -P PUERTO -u root -pPASSWORD railway < Dump20250516.sql'
    ```
+
+   Sin espacio entre `-p` y la contraseña: es la sintaxis que espera MySQL.
 
    El dump no contiene `CREATE DATABASE` ni `USE`, por eso hay que indicar
    `railway` como base de datos destino.
 
 4. Comprueba que están las 6 tablas:
    ```bash
-   mysql -h <host-publico> -P <puerto> -u root -p<password> railway -e "SHOW TABLES;"
+   & "C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe" -h HOST -P PUERTO -u root -pPASSWORD railway -e "SHOW TABLES;"
    ```
    Deben salir en **minúscula**: `multimedia`, `orderdetails`, `orders`,
    `product`, `ratings`, `users`. MySQL en Linux distingue mayúsculas en los
