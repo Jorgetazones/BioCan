@@ -151,6 +151,7 @@ export const Footer = () => {
                   '&:hover': { bgcolor: '#388e3c' },
                   borderRadius: 1,
                   textTransform: 'none',
+                  padding: '10px 20px',
                 }}
               >
                 <EmailIcon sx={{ mr: 1 }} />
